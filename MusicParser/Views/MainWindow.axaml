@@ -3,7 +3,7 @@
         xmlns:vm="using:MusicParser.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" WindowState="Maximized"
         x:Class="MusicParser.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicParser">
@@ -11,18 +11,34 @@
   <StackPanel MaxWidth="{Binding $parent}" MaxHeight="{Binding $parent}">
     <TextBox Text="{Binding Url}"/>
     <Button HorizontalContentAlignment="Center" HorizontalAlignment="Center" Command="{Binding OnCLick}">search</Button>
-    <Grid Height="30" IsVisible="{Binding IsVisible}" HorizontalAlignment="Center" ColumnDefinitions="210,140,310,220,250">
-      <TextBlock Grid.Column="1">Track</TextBlock>
-      <TextBlock Grid.Column="2">duration</TextBlock>
-      <TextBlock Grid.Column="3">Author</TextBlock>
-      <TextBlock Grid.Column="4">label</TextBlock>
-      <TextBlock Grid.Column="5">ganre</TextBlock>
-    </Grid>
-    <ListBox Items="{Binding Tracks}" MaxHeight="400" MinWidth="1150" Margin="0,10" HorizontalAlignment="Center">
+     <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition MinWidth="200"/>
+                <ColumnDefinition MinWidth="60" />
+                <ColumnDefinition MinWidth="150"/>
+                <ColumnDefinition MinWidth="150"/>
+                <ColumnDefinition MinWidth="150"/>
+              </Grid.ColumnDefinitions>
+              <TextBlock Text="Name" Grid.Column="1"/>
+              <TextBlock Text="Duration" Grid.Column="2"/>
+              <TextBlock Margin="10,0" Text="Artist Name" Grid.Column="3"/>
+              <TextBlock Margin="10,0" Text="Label" Grid.Column="4"/>
+              <TextBlock Margin="10,0" Text="Ganre" Grid.Column="5"/>
+            </Grid>
+    <ListBox Items="{Binding Tracks}" MaxHeight="400" MinWidth="1300" Margin="0,10" HorizontalAlignment="Center">
       <ListBox.ItemTemplate>
         <DataTemplate>
           <StackPanel>
-            <Grid ColumnDefinitions="250,100,300,250,250">
+            <Grid>
+              <Grid.ColumnDefinitions>
+                <ColumnDefinition MinWidth="50" />
+                <ColumnDefinition MinWidth="200"/>
+                <ColumnDefinition MinWidth="60" />
+                <ColumnDefinition MinWidth="150"/>
+                <ColumnDefinition MinWidth="150"/>
+                <ColumnDefinition MinWidth="150"/>
+              </Grid.ColumnDefinitions>
               <Image Source="{Binding TrackIcon}" MaxWidth="50"/>
               <TextBlock Text="{Binding Name}" Grid.Column="1"/>
               <TextBlock Text="{Binding Duration}" Grid.Column="2"/>

@@ -46,18 +46,19 @@ namespace MusicParser.Services
         {
             List<string> result = new();
             var getTrackName = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell title')]//a");
-            foreach (var title in getTrackName)
+            foreach (var getTitle in getTrackName)
             {
-                string trackName = " ";
-                foreach (var t in title.InnerText.Split(' '))
+                var titles = getTitle.InnerText.Split(' ');
+                string trackName = "";
+                foreach (var title in titles)
                 {
-                    if (t == "&amp;")
+                    if (title == "&amp;")
                     {
                         trackName += "&";
                     }
                     else
                     {
-                        trackName += t + " ";
+                        trackName += title + " ";
                     }
 
                 }
@@ -72,19 +73,20 @@ namespace MusicParser.Services
             var getArtists = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell artists')]");
             foreach (var getArtist in getArtists )
             {
-                string artist = " ";
-                foreach (var t in getArtist.InnerText.Split(' '))
+                var artists = getArtist.InnerText.Split(' ');
+                string artistName = "";
+                foreach (var artist in artists)
                 {
-                    if (t == "&amp;")
+                    if (artist == "&amp;")
                     {
-                        artist += "&";
+                        artistName += "&";
                     }
                     else
                     {
-                        artist += t + " ";
+                        artistName += artist + " ";
                     }
                 }
-                result.Add(artist);
+                result.Add(artistName);
             }
             return result;
         }
@@ -95,20 +97,20 @@ namespace MusicParser.Services
             var getLabels = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell label')]");
             foreach (var getLabel in getLabels)
             {
-                string label
-                    = " ";
-                foreach (var t in getLabel.InnerText.Split(' '))
+                var labels = getLabel.InnerText.Split(' ');
+                string labelName = "";
+                foreach (var label in labels)
                 {
-                    if (t == "&amp;")
+                    if (label == "&amp;")
                     {
-                        label += "&";
+                        labelName += "&";
                     }
                     else
                     {
-                        label += t + " ";
+                        labelName += label + " ";
                     }
                 }
-                result.Add(label);
+                result.Add(labelName);
             }
             return result;
         }
@@ -119,19 +121,20 @@ namespace MusicParser.Services
             var getGenres = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell genre')]//a");
             foreach (var getGenre in getGenres)
             {
-                string ganre = " ";
-                foreach (var t in getGenre.InnerText.Split(' '))
+                var ganres = getGenre.InnerText.Split(' ');
+                string ganreName = "";
+                foreach (var ganre in ganres)
                 {
-                    if (t == "&amp;")
+                    if (ganre == "&amp;")
                     {
-                        ganre += "&";
+                        ganreName += "&";
                     }
                     else
                     {
-                        ganre += t + " ";
+                        ganreName += ganre + " ";
                     }
                 }
-                result.Add(ganre);
+                result.Add(ganreName);
             }
             return result;
         }
