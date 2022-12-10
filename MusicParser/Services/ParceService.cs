@@ -8,154 +8,163 @@ namespace MusicParser.Services
 {
     public class ParceService
     {
-        public List<Track> parce(string url)
+
+        public List<Track> Parce(string url)
         {
+
             List<Track> tracks = new();
             HtmlWeb htmlWeb = new HtmlWeb();
             HtmlDocument htmlDoc = htmlWeb.Load(url);
-            List<string> names = trackName(htmlDoc);
-            List<string> artistName = artists(htmlDoc);
-            List<string> label = labels(htmlDoc);
-            List<string> ganre = ganres(htmlDoc);
-            List<string> duration = durations(htmlDoc);
-            List<Avalonia.Media.Imaging.Bitmap> icon = icons(htmlDoc);
+            List<string> names = GetTrackNames(htmlDoc);
+            List<string> artistNames = GetArtists(htmlDoc);
+            List<string> labels = GetLabels(htmlDoc);
+            List<string> ganres = GetGanres(htmlDoc);
+            List<string> durations = GetDurations(htmlDoc);
+            List<Avalonia.Media.Imaging.Bitmap> icons = GetIcons(htmlDoc);
 
             for (int i = 0; i < names.Count; i++)
             {
-                Track tr = new Track();
-                tr.TrackIcon = icon[i];
-                tr.Name = names[i];
-                tr.Ganre = ganre[i];
-                tr.Duration = duration[i];
-                if (names.Count != label.Count)
+                Track track = new Track();
+                track.TrackIcon = icons[i];
+                track.Name = names[i];
+                track.Ganre = ganres[i];
+                track.Duration = durations[i];
+                if (names.Count != labels.Count)
                 {
-                    tr.ArtistName = artistName[i + 1];
-                    tr.Label = label[i + 1];
+                    track.ArtistName = artistNames[i + 1];
+                    track.Label = labels[i + 1];
                 }
                 else
                 {
-                    tr.ArtistName = artistName[i];
-                    tr.Label = label[i];
+                    track.ArtistName = artistNames[i];
+                    track.Label = labels[i];
                 }
-                tracks.Add(tr);
+                tracks.Add(track);
             }
             return tracks;
         }
 
-        private List<string> trackName(HtmlDocument html_doc)
+        private List<string> GetTrackNames(HtmlDocument htmlDoc)
         {
-            List<string> result = new();
-            var getTrackName = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell title')]//a");
-            foreach (var getTitle in getTrackName)
+
+            var result = new List<string>();
+            var NonSortTrackNames = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell title')]//a");
+            foreach (var NonSortTrackName in NonSortTrackNames)
             {
-                var titles = getTitle.InnerText.Split(' ');
-                string trackName = "";
-                foreach (var title in titles)
+                var trackName = NonSortTrackName.InnerText.Split(' ');
+                string trackResult = "";
+                foreach (var title in trackName)
                 {
                     if (title == "&amp;")
                     {
-                        trackName += "&";
+                        trackResult += "&";
                     }
                     else
                     {
-                        trackName += title + " ";
+                        trackResult += title + " ";
                     }
 
                 }
-                result.Add(trackName);
+                result.Add(trackResult);
             }
             return result;
         }
 
-        private List<string> artists(HtmlDocument html_doc)
+        private List<string> GetArtists(HtmlDocument htmlDoc)
         {
-            List<string> result = new();
-            var getArtists = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell artists')]");
-            foreach (var getArtist in getArtists )
+
+            var result = new List<string>();
+            var NonSortArtists = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell artists')]");
+            foreach (var NonSortArtist in NonSortArtists )
             {
-                var artists = getArtist.InnerText.Split(' ');
-                string artistName = "";
+                var artists = NonSortArtist.InnerText.Split(' ');
+                string artistResult = "";
                 foreach (var artist in artists)
                 {
                     if (artist == "&amp;")
                     {
-                        artistName += "&";
+                        artistResult += "&";
                     }
                     else
                     {
-                        artistName += artist + " ";
+                        artistResult += artist + " ";
                     }
                 }
-                result.Add(artistName);
+                result.Add(artistResult);
             }
             return result;
         }
 
-        private List<string> labels(HtmlDocument html_doc)
+        private List<string> GetLabels(HtmlDocument htmlDoc)
         {
-            List<string> result = new();
-            var getLabels = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell label')]");
-            foreach (var getLabel in getLabels)
+
+            var result = new List<string>();
+            var NonSortLabels = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell label')]");
+            foreach (var NonSortLabel in NonSortLabels)
             {
-                var labels = getLabel.InnerText.Split(' ');
-                string labelName = "";
+                var labels = NonSortLabel.InnerText.Split(' ');
+                string labelResult = "";
                 foreach (var label in labels)
                 {
                     if (label == "&amp;")
                     {
-                        labelName += "&";
+                        labelResult += "&";
                     }
                     else
                     {
-                        labelName += label + " ";
+                        labelResult += label + " ";
                     }
                 }
-                result.Add(labelName);
+                result.Add(labelResult);
             }
             return result;
         }
 
-        private List<string> ganres(HtmlDocument html_doc)
+        private List<string> GetGanres(HtmlDocument htmlDoc)
         {
-            List<string> result = new();
-            var getGenres = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell genre')]//a");
-            foreach (var getGenre in getGenres)
+
+            var result = new List<string>();
+            var NonSortGenres = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell genre')]//a");
+            foreach (var NonSortGenre in NonSortGenres)
             {
-                var ganres = getGenre.InnerText.Split(' ');
-                string ganreName = "";
+                var ganres = NonSortGenre.InnerText.Split(' ');
+                string ganreResult = "";
                 foreach (var ganre in ganres)
                 {
                     if (ganre == "&amp;")
                     {
-                        ganreName += "&";
+                        ganreResult += "&";
                     }
                     else
                     {
-                        ganreName += ganre + " ";
+                        ganreResult += ganre + " ";
                     }
                 }
-                result.Add(ganreName);
+                result.Add(ganreResult);
             }
             return result;
         }
 
-        private List<string> durations(HtmlDocument html_doc)
+        private List<string> GetDurations(HtmlDocument htmlDoc)
         {
-            List<string> result = new();
-            var getDurations = html_doc.DocumentNode.SelectNodes("//span[contains(@class,'duration')]");
-            foreach (var getDuration in getDurations)
+
+            var result = new List<string>();
+            var NonSortDurations = htmlDoc.DocumentNode.SelectNodes("//span[contains(@class,'duration')]");
+            foreach (var duration in NonSortDurations)
             {
-                result.Add(getDuration.InnerText);
+                result.Add(duration.InnerText);
             }
             return result;
         }
-        private List<Avalonia.Media.Imaging.Bitmap> icons(HtmlDocument html_doc)
+
+        private List<Avalonia.Media.Imaging.Bitmap> GetIcons(HtmlDocument htmlDoc)
         {
-            List<Avalonia.Media.Imaging.Bitmap> result = new();
-            var getIcons = html_doc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell thumb')]//img");
-            foreach (var getIcon in getIcons)
+
+            var result = new List<Avalonia.Media.Imaging.Bitmap>();
+            var IconsUris = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell thumb')]//img");
+            foreach (var IconUri in IconsUris)
             {
-                string uri = getIcon.OuterHtml.Split('"')[1];
+                string uri = IconUri.OuterHtml.Split('"')[1];
                 result.Add(new(ImageDataFromUrl(uri)));
             }
             return result;
@@ -163,6 +172,7 @@ namespace MusicParser.Services
 
         private static Stream ImageDataFromUrl(string url)
         {
+
             byte[] imageData = null;
 
             using (var wc = new WebClient())

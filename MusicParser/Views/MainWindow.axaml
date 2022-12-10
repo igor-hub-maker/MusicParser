@@ -3,23 +3,15 @@
         xmlns:vm="using:MusicParser.ViewModels"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450" WindowState="Maximized"
+        mc:Ignorable="d" d:DesignWidth="1500" d:DesignHeight="500" WindowState="Maximized"
         x:Class="MusicParser.Views.MainWindow"
         Icon="/Assets/avalonia-logo.ico"
         Title="MusicParser">
 
   <StackPanel MaxWidth="{Binding $parent}" MaxHeight="{Binding $parent}">
     <TextBox Text="{Binding Url}"/>
-    <Button HorizontalContentAlignment="Center" HorizontalAlignment="Center" Command="{Binding OnCLick}">search</Button>
-     <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="50" />
-                <ColumnDefinition MinWidth="200"/>
-                <ColumnDefinition MinWidth="60" />
-                <ColumnDefinition MinWidth="150"/>
-                <ColumnDefinition MinWidth="150"/>
-                <ColumnDefinition MinWidth="150"/>
-              </Grid.ColumnDefinitions>
+    <Button HorizontalContentAlignment="Center" HorizontalAlignment="Center" Command="{Binding CLickCommand}">search</Button>
+     <Grid IsVisible="{Binding IsVisible}" ColumnDefinitions="50,200,120,170,150,150">
               <TextBlock Text="Name" Grid.Column="1"/>
               <TextBlock Text="Duration" Grid.Column="2"/>
               <TextBlock Margin="10,0" Text="Artist Name" Grid.Column="3"/>
@@ -30,15 +22,7 @@
       <ListBox.ItemTemplate>
         <DataTemplate>
           <StackPanel>
-            <Grid>
-              <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="50" />
-                <ColumnDefinition MinWidth="200"/>
-                <ColumnDefinition MinWidth="60" />
-                <ColumnDefinition MinWidth="150"/>
-                <ColumnDefinition MinWidth="150"/>
-                <ColumnDefinition MinWidth="150"/>
-              </Grid.ColumnDefinitions>
+            <Grid ColumnDefinitions="50,200,120,170,150,150">
               <Image Source="{Binding TrackIcon}" MaxWidth="50"/>
               <TextBlock Text="{Binding Name}" Grid.Column="1"/>
               <TextBlock Text="{Binding Duration}" Grid.Column="2"/>

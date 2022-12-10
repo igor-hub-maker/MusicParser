@@ -9,6 +9,7 @@ namespace MusicParser.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
+
         private bool isVisible = false;
         private string url;
         private List<Track> tracks = new List<Track>();
@@ -17,7 +18,6 @@ namespace MusicParser.ViewModels
         {
             get => tracks;
             set => this.RaiseAndSetIfChanged(ref tracks, value);
-
         }
 
         public string Url
@@ -32,10 +32,10 @@ namespace MusicParser.ViewModels
             set => this.RaiseAndSetIfChanged(ref isVisible, value);
         }
 
-        public void OnCLick()
+        public void CLickCommand()
         {
             var parceService = new ParceService();
-            Tracks = parceService.parce(Url);
+            Tracks = parceService.Parce(Url);
             IsVisible = true;
         }
     }
