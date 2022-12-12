@@ -11,20 +11,19 @@ namespace MusicParser.Services
 
         public List<Track> Parce(string url)
         {
-
-            List<Track> tracks = new();
-            HtmlWeb htmlWeb = new HtmlWeb();
-            HtmlDocument htmlDoc = htmlWeb.Load(url);
-            List<string> names = GetTrackNames(htmlDoc);
-            List<string> artistNames = GetArtists(htmlDoc);
-            List<string> labels = GetLabels(htmlDoc);
-            List<string> ganres = GetGanres(htmlDoc);
-            List<string> durations = GetDurations(htmlDoc);
-            List<Avalonia.Media.Imaging.Bitmap> icons = GetIcons(htmlDoc);
+            var tracks = new List<Track>();
+            var htmlWeb = new HtmlWeb();
+            var htmlDoc = htmlWeb.Load(url);
+            var names = GetTrackNames(htmlDoc);
+            var artistNames = GetArtists(htmlDoc);
+            var labels = GetLabels(htmlDoc);
+            var ganres = GetGanres(htmlDoc);
+            var durations = GetDurations(htmlDoc);
+            var icons = GetIcons(htmlDoc);
 
             for (int i = 0; i < names.Count; i++)
             {
-                Track track = new Track();
+                var track = new Track();
                 track.TrackIcon = icons[i];
                 track.Name = names[i];
                 track.Ganre = ganres[i];
@@ -39,20 +38,21 @@ namespace MusicParser.Services
                     track.ArtistName = artistNames[i];
                     track.Label = labels[i];
                 }
+
                 tracks.Add(track);
             }
+
             return tracks;
         }
 
         private List<string> GetTrackNames(HtmlDocument htmlDoc)
         {
-
             var result = new List<string>();
             var NonSortTrackNames = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell title')]//a");
             foreach (var NonSortTrackName in NonSortTrackNames)
             {
                 var trackName = NonSortTrackName.InnerText.Split(' ');
-                string trackResult = "";
+                var trackResult = string.Empty;
                 foreach (var title in trackName)
                 {
                     if (title == "&amp;")
@@ -63,10 +63,11 @@ namespace MusicParser.Services
                     {
                         trackResult += title + " ";
                     }
-
                 }
+
                 result.Add(trackResult);
             }
+
             return result;
         }
 
@@ -92,12 +93,12 @@ namespace MusicParser.Services
                 }
                 result.Add(artistResult);
             }
+
             return result;
         }
 
         private List<string> GetLabels(HtmlDocument htmlDoc)
         {
-
             var result = new List<string>();
             var NonSortLabels = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell label')]");
             foreach (var NonSortLabel in NonSortLabels)
@@ -117,12 +118,12 @@ namespace MusicParser.Services
                 }
                 result.Add(labelResult);
             }
+
             return result;
         }
 
         private List<string> GetGanres(HtmlDocument htmlDoc)
         {
-
             var result = new List<string>();
             var NonSortGenres = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell genre')]//a");
             foreach (var NonSortGenre in NonSortGenres)
@@ -142,12 +143,12 @@ namespace MusicParser.Services
                 }
                 result.Add(ganreResult);
             }
+
             return result;
         }
 
         private List<string> GetDurations(HtmlDocument htmlDoc)
         {
-
             var result = new List<string>();
             var NonSortDurations = htmlDoc.DocumentNode.SelectNodes("//span[contains(@class,'duration')]");
             foreach (var duration in NonSortDurations)
@@ -155,11 +156,11 @@ namespace MusicParser.Services
                 result.Add(duration.InnerText);
             }
             return result;
+
         }
 
         private List<Avalonia.Media.Imaging.Bitmap> GetIcons(HtmlDocument htmlDoc)
         {
-
             var result = new List<Avalonia.Media.Imaging.Bitmap>();
             var IconsUris = htmlDoc.DocumentNode.SelectNodes("//div[contains(@class,'trk-cell thumb')]//img");
             foreach (var IconUri in IconsUris)
@@ -172,9 +173,7 @@ namespace MusicParser.Services
 
         private static Stream ImageDataFromUrl(string url)
         {
-
             byte[] imageData = null;
-
             using (var wc = new WebClient())
                 imageData = wc.DownloadData(url);
             return new MemoryStream(imageData);

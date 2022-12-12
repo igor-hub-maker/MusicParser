@@ -9,11 +9,11 @@ namespace MusicParser.ViewModels
 {
     public class MainWindowViewModel : ViewModelBase
     {
-
+        
         private bool isVisible = false;
         private string url;
         private List<Track> tracks = new List<Track>();
-
+        
         public List<Track> Tracks
         {
             get => tracks;
